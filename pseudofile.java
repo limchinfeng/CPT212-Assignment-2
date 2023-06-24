@@ -22,6 +22,26 @@ class pseudofile {
         adjLists[src].add(dest);
     }
 
+    // Get all vertices
+    List<Integer> getVertices() {
+        List<Integer> vertices = new ArrayList<>();
+
+        for (int vertex = 0; vertex < adjLists.length; vertex++) {
+            if (!adjLists[vertex].isEmpty()) {
+                vertices.add(vertex);
+            }
+        }
+
+        for (int vertex = 0; vertex < adjLists.length; vertex++) {
+            for (int i = 0; i < adjLists.length; i++) {
+                if (adjLists[i].contains(vertex)) {
+                    vertices.add(vertex);
+                }
+            }
+        }
+        return vertices;
+    }
+
     // Show all vertex
     void showVertices() {
         System.out.println("Vertices with edges:");
@@ -68,7 +88,7 @@ class pseudofile {
         DFS(vertex, destination);
 
         if (!path.isEmpty()) {
-            System.out.println("Shortest path to the destination vertex:");
+            System.out.println("\nShortest path to the destination vertex:");
             for (int j = 0; j < path.size(); j++) {
                 System.out.print(path.get(j));
                 if (j != path.size() - 1)
@@ -76,7 +96,7 @@ class pseudofile {
             }
             System.out.println();
         } else {
-            System.out.println("No path found to the destination vertex.");
+            System.out.println("\nNo path found to the destination vertex.");
         }
     }
 
@@ -107,7 +127,7 @@ class pseudofile {
     static int ActionOption(Scanner scanner, pseudofile g) {
         int option = 0;
 
-        System.out.println("Select an option:");
+        System.out.println("\nSelect an option:");
         System.out.println("1. Print available vertices");
         System.out.println("2. Print all edges");
         System.out.println("3. Add edge");
@@ -150,15 +170,30 @@ class pseudofile {
 
         g.showVertices();
 
-        System.out.print("Enter starting point: ");
-        int start = scanner.nextInt();
-        System.out.print("Enter destination point: ");
-        int destination = scanner.nextInt();
-        if (start >= 0 && start < g.adjLists.length && destination >= 0 && destination < g.adjLists.length) {
-            g.findPathDFS(start, destination);
-        } else {
-            System.out.println("Invalid starting point or destination point.");
-        }
+        List<Integer> vertices = g.getVertices();
+        int start, destination;
+
+        do {
+            System.out.print("Enter starting vertex: ");
+            start = scanner.nextInt();
+            if (!vertices.contains(start)) {
+                System.out.println("\nInvalid starting vertex. Please enter the valid vertex.");
+                System.out.print("Starting Vertex: ");
+                start = scanner.nextInt();
+            }
+        } while (!vertices.contains(start));
+
+        do {
+            System.out.print("Enter destination vertex: ");
+            destination = scanner.nextInt();
+            if (!vertices.contains(destination)) {
+                System.out.println("\nInvalid destination vertex. Please enter the valid vertex.");
+                System.out.print("Destination Vertex: ");
+                destination = scanner.nextInt();
+            }
+        } while (!vertices.contains(destination));
+
+        g.findPathDFS(start, destination);
         System.out.println();
     }
 
