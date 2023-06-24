@@ -22,6 +22,43 @@ class pseudofile {
         adjLists[src].add(dest);
     }
 
+    // Show all vertex
+    void showVertices() {
+        System.out.println("Vertices with edges:");
+
+        Set<Integer> verticesWithEdges = new HashSet<>();
+
+        for (int vertex = 0; vertex < adjLists.length; vertex++) {
+            if (!adjLists[vertex].isEmpty()) {
+                verticesWithEdges.add(vertex);
+            }
+        }
+
+        for (int vertex = 0; vertex < adjLists.length; vertex++) {
+            for (int i = 0; i < adjLists.length; i++) {
+                if (adjLists[i].contains(vertex)) {
+                    verticesWithEdges.add(vertex);
+                }
+            }
+        }
+
+        for (int vertex : verticesWithEdges) {
+            System.out.print(vertex + " ");
+        }
+        System.out.println("");
+    }
+
+    // Show all edges
+     void showEdges() {
+        System.out.println("All edges:");
+
+        for (int vertex = 0; vertex < adjLists.length; vertex++) {
+            for (int neighbor : adjLists[vertex]) {
+                System.out.println(vertex + " -> " + neighbor);
+            }
+        }
+    }
+
     // Find path using DFS
     void findPathDFS(int vertex, int destination) {
         for (int j = 0; j < adjLists.length; j++)
@@ -69,6 +106,7 @@ class pseudofile {
 
     public static void main(String args[]) {
         Scanner scanner = new Scanner(System.in);
+        boolean exit = false;
 
         try {
             File file = new File("vertex.txt");
@@ -82,6 +120,13 @@ class pseudofile {
                 int dest = fileScanner.nextInt();
                 g.addEdge(src, dest);
             }
+            fileScanner.close();
+
+            g.showVertices();
+            System.out.println("");
+
+            g.showEdges();
+            System.out.println("");
 
             System.out.println("Following is Depth First Traversal");
 
@@ -90,7 +135,6 @@ class pseudofile {
 
             g.findPathDFS(0, destination);
 
-            fileScanner.close();
         } catch (FileNotFoundException e) {
             System.out.println("File not found.");
         }
