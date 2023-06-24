@@ -49,7 +49,7 @@ class pseudofile {
     }
 
     // Show all edges
-     void showEdges() {
+    void showEdges() {
         System.out.println("All edges:");
 
         for (int vertex = 0; vertex < adjLists.length; vertex++) {
@@ -104,39 +104,110 @@ class pseudofile {
         return false;
     }
 
+    static int ActionOption(Scanner scanner, pseudofile g) {
+        int option = 0;
+
+        System.out.println("Select an option:");
+        System.out.println("1. Print available vertices");
+        System.out.println("2. Print all edges");
+        System.out.println("3. Add edge");
+        System.out.println("4. Print shortest path from starting point to destination point");
+        System.out.println("5. Exit\n");
+        System.out.print("Option: ");
+
+        option = scanner.nextInt();
+
+        while (option < 1 && option > 5) {
+            System.out.println("Invalid option. Please enter the valid input.");
+            System.out.println("Option: ");
+            option = scanner.nextInt();
+        }
+
+        return option;
+    }
+
+    public static void printAvailableVertices(pseudofile g) {
+        g.showVertices();
+        System.out.println();
+    }
+
+    public static void printAllEdges(pseudofile g) {
+        g.showEdges();
+        System.out.println();
+    }
+
+    public static void addEdge(Scanner scanner, pseudofile g) {
+        System.out.print("Enter source vertex: ");
+        int src = scanner.nextInt();
+        System.out.print("Enter destination vertex: ");
+        int dest = scanner.nextInt();
+        g.addEdge(src, dest);
+        System.out.println("Edge added successfully.");
+        System.out.println();
+    }
+
+    public static void printShortestPath(Scanner scanner, pseudofile g) {
+        System.out.print("Enter starting point: ");
+        int start = scanner.nextInt();
+        System.out.print("Enter destination point: ");
+        int destination = scanner.nextInt();
+        if (start >= 0 && start < g.adjLists.length && destination >= 0 && destination < g.adjLists.length) {
+            g.findPathDFS(start, destination);
+        } else {
+            System.out.println("Invalid starting point or destination point.");
+        }
+        System.out.println();
+    }
+
     public static void main(String args[]) {
         Scanner scanner = new Scanner(System.in);
         boolean exit = false;
+        pseudofile g = null;
 
         try {
             File file = new File("vertex.txt");
             Scanner fileScanner = new Scanner(file);
 
             int numVertices = fileScanner.nextInt();
-            pseudofile g = new pseudofile(numVertices);
+            g = new pseudofile(numVertices);
 
             while (fileScanner.hasNextInt()) {
                 int src = fileScanner.nextInt();
                 int dest = fileScanner.nextInt();
                 g.addEdge(src, dest);
             }
+
             fileScanner.close();
-
-            g.showVertices();
-            System.out.println("");
-
-            g.showEdges();
-            System.out.println("");
-
-            System.out.println("Following is Depth First Traversal");
-
-            System.out.print("Enter destination vertex: ");
-            int destination = scanner.nextInt();
-
-            g.findPathDFS(0, destination);
-
         } catch (FileNotFoundException e) {
             System.out.println("File not found.");
+            System.exit(0);
+        }
+
+        while (!exit) {
+
+            int option = ActionOption(scanner, g);
+
+            switch (option) {
+                case 1:
+                    printAvailableVertices(g);
+                    break;
+                case 2:
+                    printAllEdges(g);
+                    break;
+                case 3:
+                    addEdge(scanner, g);
+                    break;
+                case 4:
+                    printShortestPath(scanner, g);
+                    break;
+                case 5:
+                    exit = true;
+                    break;
+                default:
+                    System.out.println("Invalid option. Please try again.");
+                    System.out.println();
+                    break;
+            }
         }
     }
 }
