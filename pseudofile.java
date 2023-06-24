@@ -147,6 +147,9 @@ class pseudofile {
     }
 
     public static void printShortestPath(Scanner scanner, pseudofile g) {
+
+        g.showVertices();
+
         System.out.print("Enter starting point: ");
         int start = scanner.nextInt();
         System.out.print("Enter destination point: ");
@@ -186,6 +189,7 @@ class pseudofile {
         while (!exit) {
 
             int option = ActionOption(scanner, g);
+            System.out.println("---");
 
             switch (option) {
                 case 1:
