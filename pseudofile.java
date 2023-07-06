@@ -3,7 +3,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 
 class pseudofile {
-    private LinkedList<Integer> adjLists[];
+    private static LinkedList<Integer> adjLists[];
     private int num[];
     private List<Integer> path;
 
@@ -145,15 +145,16 @@ String[] bigLetters = {
         System.out.println("1. Print available location");
         System.out.println("2. Print all edges between each location");
         System.out.println("3. Add edge");
-        System.out.println("4. Print path from starting location to destination location");
-        System.out.println("5. Exit\n");
+        System.out.println("4. Remove edge");
+        System.out.println("5. Print shortest path from starting point to destination location");
+        System.out.println("6. Exit\n");
         System.out.print("Option: ");
 
         option = scanner.nextInt();
 
-        while (option < 1 && option > 5) {
-            System.out.println("Invalid option. Please enter the valid input.");
-            System.out.println("Option: ");
+        while (option < 1 && option > 6) {
+            System.out.println("Invalid option. Please enter a valid input.");
+            System.out.print("Option: ");
             option = scanner.nextInt();
         }
 
@@ -177,6 +178,20 @@ String[] bigLetters = {
         int dest = scanner.nextInt();
         g.addEdge(src, dest);
         System.out.println("Edge added successfully between two locations.");
+        System.out.println();
+    }
+
+    public static void removeEdge(Scanner scanner, pseudofile g) {
+        System.out.print("Enter source vertex: ");
+        int src = scanner.nextInt();
+        System.out.print("Enter destination vertex: ");
+        int dest = scanner.nextInt();
+        if (adjLists[src].contains(dest)) {
+            adjLists[src].remove(Integer.valueOf(dest));
+            System.out.println("Edge removed successfully.");
+        } else {
+            System.out.println("Edge does not exist between the given vertices.");
+        }
         System.out.println();
     }
 
@@ -251,9 +266,12 @@ String[] bigLetters = {
                     addEdge(scanner, g);
                     break;
                 case 4:
-                    printShortestPath(scanner, g);
+                    removeEdge(scanner, g);
                     break;
                 case 5:
+                    printShortestPath(scanner, g);
+                    break;
+                case 6:
                     exit = true;
                     break;
                 default:
