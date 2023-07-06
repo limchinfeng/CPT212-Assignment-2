@@ -80,8 +80,7 @@ class pseudocf {
         g.addEdge(9, 10);
         g.addEdge(3, 5);
         g.addEdge(5, 4);
-        
-
+           
         System.out.println("Following is Depth First Traversal");
 
         Scanner scanner = new Scanner(System.in);

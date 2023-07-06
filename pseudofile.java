@@ -44,7 +44,7 @@ class pseudofile {
 
     // Show all vertex
     void showVertices() {
-        System.out.println("Vertices with edges:");
+        System.out.println("Available Location:");
 
         Set<Integer> verticesWithEdges = new HashSet<>();
 
@@ -65,7 +65,7 @@ class pseudofile {
         for (int vertex : verticesWithEdges) {
             System.out.print(vertex + " ");
         }
-        System.out.println("");
+        System.out.println("\n");
     }
 
     // Show all edges
@@ -88,7 +88,7 @@ class pseudofile {
         DFS(vertex, destination);
 
         if (!path.isEmpty()) {
-            System.out.println("\nShortest path to the destination vertex:");
+            System.out.println("\nShortest path to the destination location:");
             for (int j = 0; j < path.size(); j++) {
                 System.out.print(path.get(j));
                 if (j != path.size() - 1)
@@ -96,7 +96,8 @@ class pseudofile {
             }
             System.out.println();
         } else {
-            System.out.println("\nNo path found to the destination vertex.");
+            System.out.println(
+                    "\nNo path found from starting location " + vertex + " to the destination location " + destination);
         }
     }
 
@@ -127,11 +128,24 @@ class pseudofile {
     static int ActionOption(Scanner scanner, pseudofile g) {
         int option = 0;
 
+String[] bigLetters = {
+            "  _____  .__              .__                         _________",
+            " /  _  \\ |__|____________ |  | _____    ____   ____   \\_   ___ \\  ____   _____ ___________    ____ ___.__.",
+            " /  /_\\  \\|  \\_  __ \\____ \\|  | \\__  \\  /    \\_/ __ \\  /    \\  \\/ /  _ \\ /     \\\\____ \\__  \\  /    <   |  |",
+            "/    |    \\  ||  | \\/  |_> >  |__/ __ \\|   |  \\  ___/  \\     \\___(  <_> )  Y Y  \\  |_> > __ \\|   |  \\___  |",
+            "\\____|__  /__||__|  |   __/|____(____  /___|  /\\___  >  \\______  /\\____/|__|_|  /   __(____  /___|  / ____|",
+            "        \\/          |__|             \\/     \\/     \\/          \\/             \\/|__|       \\/     \\/\\/",
+        };
+
+        for (String line : bigLetters) {
+            System.out.println(line);
+        }
+
         System.out.println("\nSelect an option:");
-        System.out.println("1. Print available vertices");
-        System.out.println("2. Print all edges");
+        System.out.println("1. Print available location");
+        System.out.println("2. Print all edges between each location");
         System.out.println("3. Add edge");
-        System.out.println("4. Print shortest path from starting point to destination point");
+        System.out.println("4. Print path from starting location to destination location");
         System.out.println("5. Exit\n");
         System.out.print("Option: ");
 
@@ -157,12 +171,12 @@ class pseudofile {
     }
 
     public static void addEdge(Scanner scanner, pseudofile g) {
-        System.out.print("Enter source vertex: ");
+        System.out.print("Enter source location: ");
         int src = scanner.nextInt();
-        System.out.print("Enter destination vertex: ");
+        System.out.print("Enter destination location: ");
         int dest = scanner.nextInt();
         g.addEdge(src, dest);
-        System.out.println("Edge added successfully.");
+        System.out.println("Edge added successfully between two locations.");
         System.out.println();
     }
 
@@ -174,21 +188,21 @@ class pseudofile {
         int start, destination;
 
         do {
-            System.out.print("Enter starting vertex: ");
+            System.out.print("Enter starting location: ");
             start = scanner.nextInt();
             if (!vertices.contains(start)) {
-                System.out.println("\nInvalid starting vertex. Please enter the valid vertex.");
-                System.out.print("Starting Vertex: ");
+                System.out.println("\nInvalid starting location. Please enter the valid location.");
+                System.out.print("Starting Location: ");
                 start = scanner.nextInt();
             }
         } while (!vertices.contains(start));
 
         do {
-            System.out.print("Enter destination vertex: ");
+            System.out.print("Enter destination location: ");
             destination = scanner.nextInt();
             if (!vertices.contains(destination)) {
-                System.out.println("\nInvalid destination vertex. Please enter the valid vertex.");
-                System.out.print("Destination Vertex: ");
+                System.out.println("\nInvalid destination location. Please enter the valid location.");
+                System.out.print("Destination Location: ");
                 destination = scanner.nextInt();
             }
         } while (!vertices.contains(destination));
@@ -247,6 +261,23 @@ class pseudofile {
                     System.out.println();
                     break;
             }
+
+            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
         }
+
+        String[] ending = {
+            "\t\t___________.__                   __     _____.___.             ",
+            "\t\t\\__    ___/|  |__ _____    ____ |  | __ \\__  |   | ____  __ __ ",
+            "\t\t  |    |   |  |  \\__  \\  /    \\|  |/ /  /   |   |/  _ \\|  |  \\",
+            "\t\t  |    |   |   Y  \\/ __ \\|   |  \\    <   \\____   (  <_> )  |  /",
+            "\t\t  |____|   |___|  (____  /___|  /__|_ \\  / ______|\\____/|____/ ",
+            "\t\t                \\/     \\/     \\/     \\/  \\/                     ",
+        };
+
+        for (String line : ending) {
+            System.out.println(line);
+        }
+
+
     }
 }
