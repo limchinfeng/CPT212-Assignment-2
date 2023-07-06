@@ -182,15 +182,15 @@ String[] bigLetters = {
     }
 
     public static void removeEdge(Scanner scanner, pseudofile g) {
-        System.out.print("Enter source vertex: ");
+        System.out.print("Enter source location: ");
         int src = scanner.nextInt();
-        System.out.print("Enter destination vertex: ");
+        System.out.print("Enter destination location: ");
         int dest = scanner.nextInt();
         if (adjLists[src].contains(dest)) {
             adjLists[src].remove(Integer.valueOf(dest));
             System.out.println("Edge removed successfully.");
         } else {
-            System.out.println("Edge does not exist between the given vertices.");
+            System.out.println("Edge does not exist between the given locations.");
         }
         System.out.println();
     }
